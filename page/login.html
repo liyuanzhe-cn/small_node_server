@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/index.css">
+</head>
+
+<body>
+    <h1>HOME</h1>
+    <img src="./image/1.jpg" alt="">
+    <input type="text" id="stu_num" placeholder="学号">
+    <input type="password" id="password" placeholder="密码">
+    <input type="submit" onclick="loginGet()" value="get提交">
+    <input type="submit" onclick="loginPost()" value="post提交">
+    <hr>
+    <form action="/loginPostForm" method="post">
+        <input type="text" name="stuNum" placeholder="学号">
+        <input type="password" name="password" placeholder="密码">
+        <input type="submit" value="post提交">
+    </form>
+    <script>
+        function loginPost() {
+            var stuNum = document.getElementById('stu_num');
+            var pass = document.getElementById('password');
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', `http://localhost:8080/loginPost`, true);
+            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xhr.send(jsonToQuery({
+                stuNum: stuNum.value,
+                password: pass.value
+            }));
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+                    if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 304) {
+                        if (xhr.responseText == "ok") {
+                            alert('登录成功');
+                            location.href = '/main.html'
+                        } else {
+                            alert('登录失败');
+                            location.href = '/error.html'
+                        }
+                    }
+                }
+            }
+        }
+
+        function loginGet() {
+            var stuNum = document.getElementById('stu_num');
+            var pass = document.getElementById('password');
+            var xhr = new XMLHttpRequest();
+            var params = `stuNum=${stuNum.value}&password=${pass.value}`;
+            xhr.open('GET', `http://localhost:8080/loginGet?${params}`, true);
+            xhr.send();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+                    if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 304) {
+                        console.log(xhr.responseText)
+                        if (xhr.responseText == "ok") {
+                            alert('登录成功');
+                            location.href = '/main.html'
+                        } else {
+                            alert('登录失败');
+                            location.href = '/error.html'
+                        }
+                    }
+                }
+            }
+        }
+        function jsonToQuery(json) {
+            var arr = [], query = '';
+            for (var prop in json) {
+                arr.push(prop + '=' + json[prop]);
+            }
+            return arr.join('&')
+        }
+
+
+    </script>
+</body>
+
+</html>
