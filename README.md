@@ -25,7 +25,7 @@ insert into student(`stu_num`,`pass`, `name`, `age`,  `class`) value (4,'123', "
 
 3.文件夹和文件信息：
 
-###根目录文件
+#根目录文件
 config.js 解析config.conf文件
 
 filterLoader.js 打包所有的拦截器，逐次执行
@@ -38,23 +38,23 @@ server.conf 服务器配置文件
 
 server.js 服务器主入口文件
 
-####子文件夹
-# dao 数据库操作
+#子文件夹
+-> dao 数据库操作
 dbutil.js 数据库的链接接口文件
 studentDao.js 对于学生的操作
 
-#filter （未登录用户）拦截器
+-> filter （未登录用户）拦截器
 loginFilter.js 对于未登录用户的拦截，让他们只能访问指定的页面
 
-#log 日志
+-> log 日志
 server.log 服务器日志文件
 
-#utils 工具箱文件夹
+-> utils 工具箱文件夹
 
-#page 静态资源
+-> page 静态资源
 
-#services 打包数据库操作
+-> services 打包数据库操作
 对数据库操作的打包处理
 
-#web 表单验证等业务逻辑
+-> web 表单验证等业务逻辑
 controllerSet.js 把所有的不需要登录权限的接口进行打包
